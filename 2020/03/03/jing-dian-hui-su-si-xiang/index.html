@@ -433,12 +433,12 @@
                                 <span class="chip bg-color">算法</span>
                             </a>
                         
-                            <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-                                <span class="chip bg-color">滑动窗口</span>
+                            <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                                <span class="chip bg-color">回溯</span>
                             </a>
                         
-                            <a href="/tags/Python/">
-                                <span class="chip bg-color">Python</span>
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
                             </a>
                         
                     </div>
@@ -462,7 +462,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-06
+                    2020-03-03
                 </div>
                 
 
@@ -471,7 +471,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    557
+                    1.1k
                 </div>
                 
 
@@ -484,62 +484,108 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这是一道LeetCode上的题目，我觉得很典型，故在此处记录这种思想</p>
-<p>题目说明:</p>
-<p>输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。</p>
-<p>序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。</p>
-<h5 id="示例1："><a href="#示例1：" class="headerlink" title="示例1："></a>示例1：</h5><pre><code>输入:target = 9
-输出:[[2,3,4],[4,5]]</code></pre><h5 id="示例2"><a href="#示例2" class="headerlink" title="示例2:"></a>示例2:</h5><pre><code>输入:target = 15
-输出:[[1,2,3,4,5],[4,5,6][7,8]]</code></pre><h4 id="暴力法："><a href="#暴力法：" class="headerlink" title="暴力法："></a>暴力法：</h4><p>两次遍历，遍历到(target/2)+1即可</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">findContinuousSequence</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> target<span class="token punctuation">:</span> int<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
-        res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>target<span class="token operator">//</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            tmp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-            tmp_num <span class="token operator">=</span> <span class="token number">0</span>
-            <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>i<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">:</span>
-                tmp_num <span class="token operator">+=</span> j
-                <span class="token keyword">if</span> tmp_num <span class="token operator">></span> target<span class="token punctuation">:</span>
-                    <span class="token keyword">break</span>
-                <span class="token keyword">elif</span> tmp_num <span class="token operator">&lt;</span> target<span class="token punctuation">:</span>
-                    tmp<span class="token punctuation">.</span>append<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
-                <span class="token keyword">else</span><span class="token punctuation">:</span>
-                    tmp<span class="token punctuation">.</span>append<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
-                    res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tmp<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> res</code></pre>
-<p>执行用时：<strong>568 ms</strong></p>
-<p>内存消耗：<strong>13.5 MB</strong></p>
-<p>当然，这题如果只是做出来而已，那么就失去了这题的意义，下面的思想是经常用到的。</p>
-<h4 id="滑动窗口法："><a href="#滑动窗口法：" class="headerlink" title="滑动窗口法："></a>滑动窗口法：</h4><p>滑动窗口一般都会带着双指针，将窗口的两侧用双指针来实现。</p>
-<p>由于最大窗口不能过半，故滑动窗口只取到(target / 2)+1，主要思想就是窗口的两端就是两个指针，若整个窗口的值大于或小于期望值target，就将窗口缩小，可以从左边或者右边缩小，只是效率不一样，我的代码方案如下：</p>
-<p><strong>计算滑动窗口值用的数学归纳法，提升效率，若整个窗口的值大于或小于期望值target，则将右边窗口（指针）向左移一位，如果整个窗口的值小于或等于期望值，则将这个窗口整体向右平移一位（左指针，右指针个向右移动一位），代码如下：</strong></p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">findContinuousSequence</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> target<span class="token punctuation">:</span> int<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
-        res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-        left <span class="token operator">=</span> <span class="token number">1</span>
-        right <span class="token operator">=</span> <span class="token punctuation">(</span>target <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
-        <span class="token keyword">while</span> left <span class="token operator">&lt;=</span> target <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">:</span>
-            tmp_num <span class="token operator">=</span> <span class="token number">0</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-                tmp_num <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span>
-            <span class="token keyword">else</span><span class="token punctuation">:</span>
-                tmp_num <span class="token operator">=</span> <span class="token punctuation">(</span>left <span class="token operator">+</span> right<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">)</span>
-            <span class="token keyword">if</span> tmp_num <span class="token operator">></span> target<span class="token punctuation">:</span>
-                right <span class="token operator">-=</span> <span class="token number">1</span>
-            <span class="token keyword">if</span> tmp_num <span class="token operator">&lt;</span> target<span class="token punctuation">:</span>
-                left <span class="token operator">+=</span> <span class="token number">1</span>
-                right <span class="token operator">+=</span> <span class="token number">1</span>
-            <span class="token keyword">if</span> tmp_num <span class="token operator">==</span> target<span class="token punctuation">:</span>
-                tmp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-                <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>left<span class="token punctuation">,</span> right <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-                    tmp<span class="token punctuation">.</span>append<span class="token punctuation">(</span>j<span class="token punctuation">)</span>
-                res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tmp<span class="token punctuation">)</span>
-                left <span class="token operator">+=</span> <span class="token number">1</span>
-                right <span class="token operator">+=</span> <span class="token number">1</span>
-        <span class="token keyword">return</span> res</code></pre>
-<p>执行用时：<strong>232 ms</strong></p>
-<p>内存消耗：<strong>13.4 MB</strong></p>
-<p>相比于暴力法，时间优化一半以上，空间微微优化。</p>
+                <p>回溯思想当然用全排列这个经典的题目，题目取自LeetCode：</p>
+<p>给定一个<strong>没有重复</strong>数字的序列，返回其所有可能的全排列。</p>
+<pre><code>输入: [1,2,3]
+输出:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]</code></pre><h4 id="回溯思想："><a href="#回溯思想：" class="headerlink" title="回溯思想："></a>回溯思想：</h4><p>回溯顾名思义就是科幻片的时光倒流，要是能重来，你会怎么做呢？现实中当然是不可能的事情，但是我们可以在算法中实现我的远大的理想。如果一个需求要求求解一定条件下所有可能解，那么第一时间就会想到回溯。</p>
+<p>回溯通常伴随着递归，那是由于这类求解所有可能解的问题，本质上就是一个树，想要求解这个树的所有叶子结点，所以往往伴随深度优先搜索（DFS）的思想，就是回溯算法的第一个关键，当然，不可能求出所有的叶子结点，那样会有很多重复，所以“剪枝”就是回溯思想的第二个关键点，我们需要在合适的位置进行剪枝，以便我们可以只是求出我们所需要的答案，而不是所有答案。</p>
+<p>本题首先，给定的是一个没有重复的数字序列，其次输出的是没有重复的全排列。直接上代码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Integer<span class="token operator">>></span> out <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Integer<span class="token operator">>></span> <span class="token function">permute</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> len <span class="token operator">=</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> ans1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">boolean</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> sign <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>len<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> ans1<span class="token punctuation">,</span> sign<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> out<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> out<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/*
+    * 定义一个回溯函数，用dfs表示，由于给定的nums数组需要用到，所以将此数组传入函数
+    * ans集合作为中间暂用的集合，在dfs搜索时，记录走过的路径
+    * sign作为数字用没用过的标识符
+    * depth就是树的深度
+    * out则是输出结果
+    */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">,</span> List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> ans<span class="token punctuation">,</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> sign<span class="token punctuation">,</span> <span class="token keyword">int</span> depth<span class="token punctuation">,</span> List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Integer<span class="token operator">>></span> out<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">/*
+        * 无论是dfs还是递归思想，开始要设定“终点”，也就是递归的终止条件
+        * 条件就是当我们记录的数字个数等于给定数组的个数的时候，就将此数组加入结果集中
+        * 用Java来解其中关键的点是在结果集添加数组的时候，需要重新创建一个对象，如果没有，在回溯
+        * 的时候，会将记录的结果也“回溯”掉
+        */</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>ans<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            out<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>ans<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">/*
+        * 一个遍历中接一个递归，这是可以算是回溯算法的模板了
+        * 如果当前数字用过，那么当前数字对应的sign便为true，那么也不会往下继续执行
+        */</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>sign<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                ans<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                sign<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+                <span class="token function">dfs</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> ans<span class="token punctuation">,</span> sign<span class="token punctuation">,</span> depth <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> out<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">/*
+                * 这里为回溯算法的思想关键，递归回来之后，将之前改变的条件全部变回原来的情况
+                * 原来某一个数字是用过的，那么我将sign变回false，那么这个数字我没有用过
+                * 原来我将记录集合ans中添加了元素的，那么我将ans中移除一个元素
+                * 这就是体现的回溯思想！
+                */</span>
+                sign<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+                ans<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>depth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>但是！！！如果给定的数组是重复的呢？</p>
+<pre><code>输入: [1,1,2]
+输出:
+[
+  [1,1,2],
+  [1,2,1],
+  [2,1,1]
+]</code></pre><p>其实和上面的思想是一样的，直接上代码:</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Integer<span class="token operator">>></span> <span class="token function">permuteUnique</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> len <span class="token operator">=</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Integer<span class="token operator">>></span> out <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> ans <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> sign <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>len<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>nums<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//这里加一个排序，可以提升效率</span>
+        <span class="token function">helper</span><span class="token punctuation">(</span>ans<span class="token punctuation">,</span> nums<span class="token punctuation">,</span> sign<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> out<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> out<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">helper</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> ans<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">,</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> sign<span class="token punctuation">,</span> <span class="token keyword">int</span> depth<span class="token punctuation">,</span> List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Integer<span class="token operator">>></span> out<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>ans<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            out<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>ans<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">/*
+        * 只需要这个添加一个记录值pre，这个pre记录我当前递归节点的上一个节点值，
+        * 如果递归节点值等于上一个节点，那么就直接跳过当前遍历
+        */</span>
+        <span class="token keyword">int</span> pre <span class="token operator">=</span> nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>sign<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> pre <span class="token operator">!=</span> nums<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                ans<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                sign<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+                <span class="token function">helper</span><span class="token punctuation">(</span>ans<span class="token punctuation">,</span> nums<span class="token punctuation">,</span> sign<span class="token punctuation">,</span> depth <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> out<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                pre <span class="token operator">=</span> nums<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                sign<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+                ans<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>depth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 
             </div>
             <hr/>
@@ -565,7 +611,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://uniquelc.github.io/2020/03/06/jing-dian-hua-dong-chuang-kou-si-xiang/">https://uniquelc.github.io/2020/03/06/jing-dian-hua-dong-chuang-kou-si-xiang/</a>
+                    <a href="https://uniquelc.github.io/2020/03/03/jing-dian-hui-su-si-xiang/">https://uniquelc.github.io/2020/03/03/jing-dian-hui-su-si-xiang/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -611,12 +657,12 @@
                                     <span class="chip bg-color">算法</span>
                                 </a>
                             
-                                <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-                                    <span class="chip bg-color">滑动窗口</span>
+                                <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                                    <span class="chip bg-color">回溯</span>
                                 </a>
                             
-                                <a href="/tags/Python/">
-                                    <span class="chip bg-color">Python</span>
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
                                 </a>
                             
                         </div>
@@ -782,10 +828,9 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2020/03/06/jing-dian-hua-dong-chuang-kou-si-xiang/">
                     <div class="card-image">
@@ -806,9 +851,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-06
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-06
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -821,7 +866,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -849,7 +893,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
                 <a href="/2020/03/03/jing-dian-hui-su-si-xiang/">
@@ -891,6 +935,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
