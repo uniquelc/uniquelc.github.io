@@ -471,7 +471,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    496
+                    557
                 </div>
                 
 
@@ -509,7 +509,9 @@
         <span class="token keyword">return</span> res</code></pre>
 <p>执行用时：<strong>568 ms</strong></p>
 <p>内存消耗：<strong>13.5 MB</strong></p>
-<h4 id="滑动窗口法："><a href="#滑动窗口法：" class="headerlink" title="滑动窗口法："></a>滑动窗口法：</h4><p>由于最大窗口不能过半，故滑动窗口只取到(target / 2)+1，主要思想就是窗口的两端就是两个指针，若整个窗口的值大于或小于期望值target，就将窗口缩小，可以从左边或者右边缩小，只是效率不一样，我的代码方案如下：</p>
+<p>当然，这题如果只是做出来而已，那么就失去了这题的意义，下面的思想是经常用到的。</p>
+<h4 id="滑动窗口法："><a href="#滑动窗口法：" class="headerlink" title="滑动窗口法："></a>滑动窗口法：</h4><p>滑动窗口一般都会带着双指针，将窗口的两侧用双指针来实现。</p>
+<p>由于最大窗口不能过半，故滑动窗口只取到(target / 2)+1，主要思想就是窗口的两端就是两个指针，若整个窗口的值大于或小于期望值target，就将窗口缩小，可以从左边或者右边缩小，只是效率不一样，我的代码方案如下：</p>
 <p><strong>计算滑动窗口值用的数学归纳法，提升效率，若整个窗口的值大于或小于期望值target，则将右边窗口（指针）向左移一位，如果整个窗口的值小于或等于期望值，则将这个窗口整体向右平移一位（左指针，右指针个向右移动一位），代码如下：</strong></p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
     <span class="token keyword">def</span> <span class="token function">findContinuousSequence</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> target<span class="token punctuation">:</span> int<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
