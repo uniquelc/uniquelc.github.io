@@ -473,13 +473,13 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p>首先看下集合的结构图:</p>
-<p><img src="C:%5CUsers%5Clc%5CDesktop%5CList%E9%9B%86%E5%90%88UML%E5%9B%BE.png" alt=""></p>
+<p><img src="/2019/10/03/map-in-java/img2.png" alt="img2"></p>
 <h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><h4 id="第一层是迭代器Iterator接口。"><a href="#第一层是迭代器Iterator接口。" class="headerlink" title="第一层是迭代器Iterator接口。"></a>第一层是迭代器Iterator接口。</h4><h4 id="第二层是Collection接口继承Iterator。"><a href="#第二层是Collection接口继承Iterator。" class="headerlink" title="第二层是Collection接口继承Iterator。"></a>第二层是Collection接口继承Iterator。</h4><h4 id="第三层可以分为两大类：存的类型为值或键值对。"><a href="#第三层可以分为两大类：存的类型为值或键值对。" class="headerlink" title="第三层可以分为两大类：存的类型为值或键值对。"></a>第三层可以分为两大类：存的类型为值或键值对。</h4><h5 id="Value型"><a href="#Value型" class="headerlink" title="Value型"></a>Value型</h5><h6 id="List"><a href="#List" class="headerlink" title="List"></a>List</h6><p>​            List类型的特点为有序（放入value是什么顺序，出来就是什么顺序），可重复，实现类有ArrayList，LinkedList和Vector，其中ArrayList和LinkedList的底层分别是根据数组和链表实现的，当然这两个实现类的特点也和数组和链表的特点一样，ArrayList改和查效率高，LinkedList增删效率高。vector用的比较少，它的特点是线程安全的，底层都是用synchronize锁实现的线程安全。</p>
 <h6 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h6><p>​            Set集合类型的特点为无序（放入value是什么顺序，出来不一定是这个顺序），不可重复，实现类有HashSet，SortedSet接口继承Set接口，SortedSet的实现类是TreeSet。</p>
 <p>​            HashSet其实就是HashMap的key，保证HashMap的key的唯一性。HashSet底层是用哈希表（数组+链表）的原理实现的。LinkedHashSet的底层是将哈希表的实现变为数组+双向链表，双向链表相比于单链表的优点就是双向链表更容易到达前一个节点，效率更高。</p>
 <p>​            SortedSet是用TreeSet实现的，SortedSet顾名思义就是有序的Set集合。</p>
 <h5 id="Key-Value"><a href="#Key-Value" class="headerlink" title="Key-Value"></a>Key-Value</h5><h6 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h6><p>​            由Key-Value结构，Key键值唯一，线程不安全的，底层也是哈希表（数组+链表+红黑树），HashSet的实现就是调用HashMap的方法，HashMap有个默认值，当链表长度大于这个默认值时，会将链表转为红黑树，小于默认值时，转化为链表，哈希表原理如下</p>
-<p><img src="C:%5CUsers%5Clc%5CDesktop%5C5679451-c6e80d30b6653324.webp" alt=""></p>
+<p><img src="/2019/10/03/map-in-java/img1.png" alt="img1"></p>
 <p>​                                                                                图片取自网络</p>
 <p>JDK1.7和JDK1.8相比，1.7版本HashMap的结构是数组+链表结构，而1.8版本HashMap结构是数据+链表+红黑树，提升了效率。</p>
 <h6 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h6><p>HashTable和HashMap相比只有很小的区别，第一HashTable是线程安全的，第二HashTable不能接受key或value为null的值。</p>
@@ -509,7 +509,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://uniquelc.github.io/2019/10/03/java-zhong-de-map/">https://uniquelc.github.io/2019/10/03/java-zhong-de-map/</a>
+                    <a href="https://uniquelc.github.io/2019/10/03/map-in-java/">https://uniquelc.github.io/2019/10/03/map-in-java/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -787,7 +787,7 @@
                 本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/03/java-zhong-de-map/">
+                <a href="/2019/10/03/map-in-java/">
                     <div class="card-image">
                         
                         
